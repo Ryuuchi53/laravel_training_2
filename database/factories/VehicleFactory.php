@@ -24,7 +24,7 @@ class VehicleFactory extends Factory
             'year' => $this->faker->year(),
             'brand' => $this->faker->company(),
             'license_plate' => $this->faker->unique()->regexify('[A-Z]{3}[0-9]{4}'),
-            'created_by' => User::factory(),
+            'created_by' => User::all()->count() > 0 ? User::all()->random()->id : User::factory()->create()->id,
         ];
     }
 }
