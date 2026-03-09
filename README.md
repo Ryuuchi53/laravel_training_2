@@ -1,5 +1,5 @@
-<code>composer require laravel/ui</code>
-<code>php artisan ui vue --auth</code>
-<code>npm install --force</code>
-<code>npm run build</code>
+<code>composer require laravel/ui</code><br>
+<code>php artisan ui vue --auth</code><br>
+<code>npm install --force</code><br>
+<code>npm run build</code><br>
 <code>php artisan optimize</code>
