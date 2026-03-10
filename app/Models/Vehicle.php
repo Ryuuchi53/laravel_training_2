@@ -17,4 +17,8 @@ class Vehicle extends Model
         'brand',
         'license_plate',
     ];
+
+    public function setLicensePlateAttribute(string $value){
+        $this->attributes['license_plate'] = strtoupper(str_replace(' ', '', trim($value)));
+    }
 }
