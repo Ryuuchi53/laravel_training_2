@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -38,33 +40,9 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $messages = [
-            'name.required' => 'Nama diperlukan',
-            'name.max' => 'Nama tidak boleh melebihi :max aksara',
-            'email.required' => 'Email diperlukan',
-            'email.email' => 'Email tidak sah',
-            'email.unique' => 'Email sudah digunakan',
-            'password.required' => 'Kata laluan diperlukan',
-            'password.min' => 'Kata laluan mesti sekurang-kurangnya :min aksara',
-            'password.confirmed' => 'Kata laluan dan pengesahan tidak sepadan',
-        ];
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-        ], $messages);
-
-        if ($validator->fails()) {
-            return redirect()->route('users.create')
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Sila semak semula');
-        }
-
-        $validated = $validator->validated();
+        $validated = $request->validated();
 
         $user = new User();
         $user->name = $validated['name'];
@@ -98,36 +76,10 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        $messages = [
-            'name.required' => 'Nama diperlukan',
-            'name.max' => 'Nama tidak boleh melebihi :max aksara',
-            'email.required' => 'Email diperlukan',
-            'email.email' => 'Email tidak sah',
-        ];
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-        ], $messages);
-
         $user = user::findOrFail($id);
-
-        if ($validator->fails()) {
-            return redirect()->route('users.edit', $user->id)
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Sila semak semula');
-        }
-
-        $validated = $validator->validated();
-
-        $name = $validated['name'];
-        $email = $validated['email'];
-
-        $user->name = $name;
-        $user->email = $email;
+        $user->fill($request->validated());
         $user->save();
 
         return redirect()->route('users.index')->with('success', 'Pengguna berjaya dikemaskini');

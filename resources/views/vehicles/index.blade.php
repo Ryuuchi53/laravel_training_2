@@ -58,11 +58,11 @@
                                             <td>{{ $vehicle->license_plate }}</td>
                                             <td class="text-end">
                                                 <a href="{{ route('vehicles.show', $vehicle->id) }}"
-                                                    class="btn btn-sm btn-outline-info me-2">Lihat</a>
+                                                    class="btn btn-sm btn-secondary me-2">Lihat</a>
                                                 @if (auth()->id() == $vehicle->created_by)
                                                     <a href="{{ route('vehicles.edit', $vehicle->id) }}"
-                                                        class="btn btn-sm btn-outline-primary me-2">Kemaskini</a>
-                                                    <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm me-2"
+                                                        class="btn btn-sm btn-primary me-2">Kemaskini</a>
+                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2"
                                                         onclick="confirmDelete(event, {{ $vehicle->id }})">
                                                         Hapus
                                                     </a>

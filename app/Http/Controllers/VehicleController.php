@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
+use App\Http\Requests\StoreVehicleRequest;
+use App\Http\Requests\UpdateVehicleRequest;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
@@ -38,22 +40,17 @@ class VehicleController extends Controller
         return view('vehicles.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreVehicleRequest $request)
     {
-        $model = $request->input('model');
-        $color = $request->input('color');
-        $make = $request->input('make');
-        $year = $request->input('year');
-        $brand = $request->input('brand');
-        $license_plate = $request->input('license_plate');
+        $validated = $request->validated();
 
         $vehicle = new Vehicle();
-        $vehicle->model = $model;
-        $vehicle->color = $color;
-        $vehicle->make = $make;
-        $vehicle->year = $year;
-        $vehicle->brand = $brand;
-        $vehicle->license_plate = $license_plate;
+        $vehicle->model = $validated['model'];
+        $vehicle->color = $validated['color'];
+        $vehicle->make = $validated['make'];
+        $vehicle->year = $validated['year'];
+        $vehicle->brand = $validated['brand'];
+        $vehicle->license_plate = $validated['license_plate'];
         $vehicle->created_by = auth()->user()->id;
         $vehicle->save();
 
@@ -67,22 +64,10 @@ class VehicleController extends Controller
         return view('vehicles.edit', compact('vehicle'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateVehicleRequest $request, $id)
     {
-        $model = $request->input('model');
-        $color = $request->input('color');
-        $make = $request->input('make');
-        $year = $request->input('year');
-        $brand = $request->input('brand');
-        $license_plate = $request->input('license_plate');
-
         $vehicle = Vehicle::findOrFail($id);
-        $vehicle->model = $model;
-        $vehicle->color = $color;
-        $vehicle->make = $make;
-        $vehicle->year = $year;
-        $vehicle->brand = $brand;
-        $vehicle->license_plate = $license_plate;
+        $vehicle->fill($request->validated());
         $vehicle->save();
 
         return redirect()->route('vehicles.index')->with('success', 'Kenderaan berjaya dikemaskini');

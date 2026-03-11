@@ -50,17 +50,17 @@
                                             <td class="text-wrap text-break">{{ $user->email }}</td>
                                             <td class="text-end">
                                                 <a href="{{ route('users.show', $user->id) }}"
-                                                    class="btn btn-sm btn-outline-info me-2">Lihat</a>
+                                                    class="btn btn-sm btn-secondary me-2">Lihat</a>
                                                 <a href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-sm btn-outline-primary me-2">Kemaskini</a>
+                                                    class="btn btn-sm btn-primary me-2">Kemaskini</a>
                                                 @if ($user->status == 1)
-                                                    <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm me-2"
+                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2"
                                                         onclick="confirmDeactivate(event, {{ $user->id }})">
                                                         Nyahaktif
                                                     </a>
                                                 @else
                                                     <a href="javascript:void(0);"
-                                                        class="btn btn-outline-success btn-sm me-2"
+                                                        class="btn btn-success btn-sm me-2"
                                                         onclick="confirmActivate(event, {{ $user->id }})">
                                                         Aktifkan
                                                     </a>
