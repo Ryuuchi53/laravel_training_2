@@ -24,6 +24,18 @@
                                         <label for="content" class="form-label">{{ __('Keterangan') }}</label>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        @if ($blog->attachment != null)
+                                            <img src="{{ asset('storage/' . $blog->attachment) }}" alt=""
+                                                class="form-control" style="height: auto">
+                                            <label for="content" class="form-label">{{ __('Gambar') }}</label>
+                                        @else
+                                            <input class="form-control" value="{{ __('Tiada Gambar') }}" readonly>
+                                            <label for="content" class="form-label">{{ __('Gambar') }}</label>
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="d-flex justify-content-between">
                                     <a href="{{ route('blogs.index') }}" class="btn btn-secondary">Kembali</a>
                                 </div>

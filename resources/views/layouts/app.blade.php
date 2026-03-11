@@ -30,7 +30,6 @@
 
     <style>
         .active {
-            text-decoration: underline;
             text-underline-offset: 5px;
             color: blue !important;
         }
@@ -82,6 +81,10 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('vehicles.*') ? 'active' : '' }}"
                                     href="{{ route('vehicles.index') }}">{{ __('Kenderaan') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"
+                                    href="{{ route('users.index') }}">{{ __('Pengguna') }}</a>
                             </li>
                         </ul>
                     @endguest

@@ -12,6 +12,7 @@ class Blog extends Model
         'title',
         'content',
         'created_by',
+        'attachment'
     ];
 
     public function creator()

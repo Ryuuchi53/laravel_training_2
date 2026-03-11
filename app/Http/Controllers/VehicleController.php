@@ -7,9 +7,21 @@ use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(5);
+        $name = $request->input('name');
+
+        $vehicles = Vehicle::where(function ($query) {
+            $query->when(request()->filled('name'), function ($query) {
+                $query->where('model', 'like', '%' . request()->name . '%')
+                    ->orWhere('color', 'like', '%' . request()->name . '%')
+                    ->orWhere('brand', 'like', '%' . request()->name . '%')
+                    ->orWhere('make', 'like', '%' . request()->name . '%')
+                    ->orWhere('license_plate', 'like', '%' . request()->name . '%');
+            });
+        })
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
 
         return view('vehicles.index', compact('vehicles'));
     }

@@ -7,7 +7,7 @@
                 <div class="card bg-white shadow-sm border-0">
                     <div class="card">
                         <div class="card-header">{{ __('Blog Form') }}</div>
-                        <form action="{{ route('blogs.store') }}" method="POST">
+                        <form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="mb-3">
@@ -20,6 +20,12 @@
                                     <div class="form-floating">
                                         <textarea class="form-control" id="content" name="content" placeholder="{{ __('Keterangan') }}" required oninput="autoResize(this);"></textarea>
                                         <label for="content" class="form-label">{{ __('Keterangan') }}</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <input type="file" name="attachment" id="attachment" class="form-control">
+                                        <label for="attachment" class="form-label">{{ __('Fail') }}</label>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between">
