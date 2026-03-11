@@ -31,7 +31,7 @@
     <style>
         .active {
             text-underline-offset: 5px;
-            color: blue !important;
+            color: white !important;
         }
 
         .form-floating .select2-container--default .select2-selection--single {
@@ -53,8 +53,8 @@
 </head>
 
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <div id="app" class="d-flex flex-column min-vh-100">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -129,9 +129,16 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 flex-grow-1">
             @yield('content')
         </main>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white py-3 mt-auto">
+            <div class="container text-center">
+                &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. {{ __('All rights reserved.') }}
+            </div>
+        </footer>
     </div>
 </body>
 
