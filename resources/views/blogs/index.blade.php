@@ -35,7 +35,7 @@
                         <div class="table-responsive">
                             <table class="table table-light table-bordered">
                                 <thead>
-                                    <tr>
+                                    <tr class="table-dark">
                                         <th width="5%">{{ __('#') }}</th>
                                         <th width="30%">{{ __('Tajuk') }}</th>
                                         <th width="30%">{{ __('Keterangan') }}</th>
