@@ -95,13 +95,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item me-2">
-                                    <a class="btn btn-primary" href="{{ route('login') }}">{{ __('Log Masuk') }}</a>
+                                    <a class="btn btn-primary btn-sm" href="{{ route('login') }}">{{ __('Log Masuk') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="btn btn-primary" href="{{ route('register') }}">{{ __('Pendaftaran') }}</a>
+                                    <a class="btn btn-primary btn-sm" href="{{ route('register') }}">{{ __('Pendaftaran') }}</a>
                                 </li>
                             @endif
                         @else
