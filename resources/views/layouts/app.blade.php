@@ -105,7 +105,7 @@
                                 </li>
                             @endif
                         @else
-                            <a class="btn btn-danger" href="{{ route('logout') }}"
+                            <a class="btn btn-danger btn-sm" href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>

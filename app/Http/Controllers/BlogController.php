@@ -23,7 +23,7 @@ class BlogController extends Controller
                     }
                 });
             })
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate(5);
 
         return view('blogs.index', compact('blogs'));

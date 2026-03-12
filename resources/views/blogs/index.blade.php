@@ -39,7 +39,9 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary input-group-text">Cari</button>
                                         @if (request()->routeIs('blogs.index') && request()->query())
-                                            <a href="{{ route('blogs.index') }}" class="btn btn-secondary input-group-text d-flex align-items-center">Set Semula</a>
+                                            <a href="{{ route('blogs.index') }}"
+                                                class="btn btn-secondary input-group-text d-flex align-items-center">Set
+                                                Semula</a>
                                         @endif
                                     </div>
                                 </div>
@@ -64,7 +66,11 @@
                                                 <small class="text-muted">
                                                     <em>
                                                         {{ __('Dicipta Oleh : ') . $blog->user->name }} <br>
-                                                        {{ __('Pada : ') . $blog->user->created_at->format('d/m/Y') }}
+                                                        @if ($blog->user->created_at == $blog->user->updated_at)
+                                                            {{ __('Pada : ') . $blog->user->created_at->format('d/m/Y') }}
+                                                        @else
+                                                            {{ __('Dikemaskini Pada : ') . $blog->user->updated_at->format('d/m/Y') }}
+                                                        @endif
                                                     </em>
                                                 </small>
                                             </td>
