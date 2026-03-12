@@ -3,6 +3,17 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            @if (session('error') && $errors->any())
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    {{ session('error') }}
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="col-md-8">
                 <div class="card bg-white shadow-sm border-0">
                     <div class="card">
@@ -12,13 +23,13 @@
                             <div class="card-body">
                                 <div class="mb-3">
                                     <div class="form-floating">
-                                        <input class="form-control" id="title" name="title" placeholder="{{ __('Tajuk') }}" required>
+                                        <input class="form-control" id="title" name="title" placeholder="{{ __('Tajuk') }}">
                                         <label for="title" class="form-label">{{ __('Tajuk') }}</label>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-floating">
-                                        <textarea class="form-control" id="content" name="content" placeholder="{{ __('Keterangan') }}" required oninput="autoResize(this);"></textarea>
+                                        <textarea class="form-control" id="content" name="content" placeholder="{{ __('Keterangan') }}" oninput="autoResize(this);"></textarea>
                                         <label for="content" class="form-label">{{ __('Keterangan') }}</label>
                                     </div>
                                 </div>

@@ -66,10 +66,10 @@
                                                 <small class="text-muted">
                                                     <em>
                                                         {{ __('Dicipta Oleh : ') . $blog->user->name }} <br>
-                                                        @if ($blog->user->created_at == $blog->user->updated_at)
-                                                            {{ __('Pada : ') . $blog->user->created_at->format('d/m/Y') }}
+                                                        @if ($blog->created_at == $blog->updated_at)
+                                                            {{ __('Pada : ') . $blog->created_at->format('d/m/Y') }}
                                                         @else
-                                                            {{ __('Dikemaskini Pada : ') . $blog->user->updated_at->format('d/m/Y') }}
+                                                            {{ __('Dikemaskini Pada : ') . $blog->updated_at->format('d/m/Y') }}
                                                         @endif
                                                     </em>
                                                 </small>

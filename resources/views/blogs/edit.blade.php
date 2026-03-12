@@ -3,6 +3,17 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            @if (session('error') && $errors->any())
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    {{ session('error') }}
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="col-md-8">
                 <div class="card bg-white shadow-sm border-0">
                     <div class="card">
@@ -14,13 +25,13 @@
                                 <div class="mb-3">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="title" name="title"
-                                            value="{{ $blog->title }}" required>
+                                            value="{{ $blog->title }}">
                                         <label for="title" class="form-label">{{ __('Tajuk') }}</label>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-floating">
-                                        <textarea class="form-control" id="content" name="content" required oninput="autoResize(this);">{{ $blog->content }}</textarea>
+                                        <textarea class="form-control" id="content" name="content" oninput="autoResize(this);">{{ $blog->content }}</textarea>
                                         <label for="content" class="form-label">{{ __('Keterangan') }}</label>
                                     </div>
                                 </div>

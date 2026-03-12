@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBlogRequest;
+use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -41,15 +43,13 @@ class BlogController extends Controller
         return view('blogs.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreBlogRequest $request)
     {
-        $title = $request->input('title');
-        $content = $request->input('content');
+        $validated = $request->validated();
 
         $blog = new Blog();
-        $blog->title = $title;
-        $blog->content = $content;
-        $blog->created_by = auth()->user()->id;
+        $blog->fill($request->validated());
+        $blog->created_by = $validated(auth()->id());
         if ($request->hasFile('attachment')) {
             $blog->attachment = $request->file('attachment')->store('blog-attachment', 'public');
         }
@@ -66,14 +66,10 @@ class BlogController extends Controller
         return view('blogs.edit', compact('blog'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateBlogRequest $request, $id)
     {
-        $title = $request->input('title');
-        $content = $request->input('content');
-
         $blog = Blog::findOrFail($id);
-        $blog->title = $title;
-        $blog->content = $content;
+        $blog->fill($request->validated());
         if ($blog->attachment) {
             Storage::disk('public')->delete($blog->attachment);
         }
