@@ -19,19 +19,32 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="d-flex flex-row-reverse">
-                            <form action="{{ route('blogs.index') }}">
-                                @csrf
-                                <div class="input-group">
-                                    <input type="text" id="title" name="title" class="form-control"
-                                        onchange="submit()" placeholder="Sila cari...">
-                                    <button type="submit" class="btn btn-primary">Cari</button>
-                                    @if (request()->routeIs('blogs.index') && request()->query())
-                                        <a href="{{ route('blogs.index') }}" class="btn btn-secondary">Set Semula</a>
-                                    @endif
+                        <form method="GET" action="{{ route('blogs.index') }}">
+                            @csrf
+                            <div class="row row-cols-auto g-1 justify-content-end">
+                                <div class="col form-floating">
+                                    <select class="form-select" name="mytask" id="mytask"
+                                        data-placeholder="Sila pilih...">
+                                        <option value="">Sila pilih...</option>
+                                        <option value="1">Ya</option>
+                                    </select>
+                                    <label for="mytask">Tugasan Saya</label>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="col">
+                                    <div class="input-group">
+                                        <div class="form-floating">
+                                            <input type="text" id="title" name="title" class="form-control"
+                                                onchange="submit()" placeholder="tajuk / keterangan">
+                                            <label for="title">tajuk / keterangan</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary input-group-text">Cari</button>
+                                        @if (request()->routeIs('blogs.index') && request()->query())
+                                            <a href="{{ route('blogs.index') }}" class="btn btn-secondary input-group-text d-flex align-items-center">Set Semula</a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <table class="table table-light table-bordered">
                                 <thead>
@@ -46,7 +59,15 @@
                                     @forelse ($blogs as $index => $blog)
                                         <tr>
                                             <td>{{ $blogs->firstItem() + $index }}</td>
-                                            <td>{{ $blog->title }}</td>
+                                            <td>
+                                                {{ $blog->title }} <br><br>
+                                                <small class="text-muted">
+                                                    <em>
+                                                        {{ __('Dicipta Oleh : ') . $blog->user->name }} <br>
+                                                        {{ __('Pada : ') . $blog->user->created_at->format('d/m/Y') }}
+                                                    </em>
+                                                </small>
+                                            </td>
                                             <td class="text-wrap text-break">{{ $blog->content }}</td>
                                             <td class="text-end">
                                                 <a href="{{ route('blogs.show', $blog->id) }}"

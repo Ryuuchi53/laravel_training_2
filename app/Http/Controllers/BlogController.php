@@ -10,12 +10,19 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
-        $blogs = Blog::where(function ($query) {
-            $query->when(request()->filled('title'), function ($query) {
-                $query->where('title', 'like', '%' . request()->title . '%')
-                    ->orWhere('content', 'like', '%' . request()->title . '%');
-            });
-        })
+        $blogs = Blog::with('user')
+            ->where(function ($query) {
+                $query->when(request()->filled('title'), function ($query) {
+                    $query->where('title', 'like', '%' . request()->title . '%')
+                        ->orWhere('content', 'like', '%' . request()->title . '%');
+                });
+
+                $query->when(request()->filled('mytask'), function ($query) {
+                    if (request()->mytask == 1) {
+                        $query->where('created_by', auth()->id());
+                    }
+                });
+            })
             ->orderBy('created_at', 'desc')
             ->paginate(5);
 

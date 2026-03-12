@@ -19,19 +19,24 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="d-flex flex-row-reverse">
-                            <form action="{{ route('vehicles.index') }}">
-                                @csrf
-                                <div class="input-group">
-                                    <input type="text" id="name" name="name" class="form-control"
-                                        onchange="submit()" placeholder="Sila cari...">
-                                    <button type="submit" class="btn btn-primary">Cari</button>
-                                    @if (request()->routeIs('vehicles.index') && request()->query())
-                                        <a href="{{ route('vehicles.index') }}" class="btn btn-secondary">Set Semula</a>
-                                    @endif
+                        <form method="GET" action="{{ route('vehicles.index') }}">
+                            @csrf
+                            <div class="row row-cols-auto g-1 justify-content-end">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <div class="form-floating">
+                                            <input type="text" id="name" name="name" class="form-control"
+                                                onchange="submit()" placeholder="Carian">
+                                            <label for="name">Carian</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary input-group-text">Cari</button>
+                                        @if (request()->routeIs('vehicles.index') && request()->query())
+                                            <a href="{{ route('vehicles.index') }}" class="btn btn-secondary input-group-text d-flex align-items-center">Set Semula</a>
+                                        @endif
+                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <table class="table table-light table-bordered">
                                 <thead>

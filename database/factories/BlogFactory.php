@@ -20,7 +20,7 @@ class BlogFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'content' => fake()->paragraph(),
-            'created_by' => User::factory(), // Assuming users with IDs 1-10 exist
+            'created_by' => User::all()->count() > 0 ? User::all()->random()->id : User::factory()->create()->id,
         ];
     }
 }

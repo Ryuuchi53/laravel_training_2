@@ -33,7 +33,7 @@
         };
 
         new Chart(ctx, {
-            type: 'bar',
+            type: 'pie',
             data: chartData,
             options: {
                 scales: {

@@ -15,8 +15,8 @@ class Blog extends Model
         'attachment'
     ];
 
-    public function creator()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

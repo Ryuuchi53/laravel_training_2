@@ -126,7 +126,7 @@
         <!-- Footer -->
         <footer class="bg-dark text-white py-3 mt-auto">
             <div class="container text-center">
-                &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. {{ __('All rights reserved.') }}
+                &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}
             </div>
         </footer>
     </div>
