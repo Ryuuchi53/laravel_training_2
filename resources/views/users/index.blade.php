@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.custom.main')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid px-4 py-4">
         <div class="row justify-content-center">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="col-md-12">
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 <div class="card bg-white">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -31,13 +31,15 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary input-group-text">Cari</button>
                                         @if (request()->routeIs('users.index') && request()->query())
-                                            <a href="{{ route('users.index') }}" class="btn btn-secondary input-group-text d-flex align-items-center">Set Semula</a>
+                                            <a href="{{ route('users.index') }}"
+                                                class="btn btn-secondary input-group-text d-flex align-items-center">Set
+                                                Semula</a>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="table-responsive">
+                        <div class="table-responsive rounded">
                             <table class="table table-light table-bordered">
                                 <thead>
                                     <tr class="table-dark">
@@ -55,17 +57,16 @@
                                             <td class="text-wrap text-break">{{ $user->email }}</td>
                                             <td class="text-end">
                                                 <a href="{{ route('users.show', $user->id) }}"
-                                                    class="btn btn-sm btn-secondary me-2">Lihat</a>
+                                                    class="btn btn-sm btn-secondary me-2 mb-2">Lihat</a>
                                                 <a href="{{ route('users.edit', $user->id) }}"
-                                                    class="btn btn-sm btn-primary me-2">Kemaskini</a>
+                                                    class="btn btn-sm btn-primary me-2 mb-2">Kemaskini</a>
                                                 @if ($user->status == 1)
-                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2"
+                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2 mb-2"
                                                         onclick="confirmDeactivate(event, {{ $user->id }})">
                                                         Nyahaktif
                                                     </a>
                                                 @else
-                                                    <a href="javascript:void(0);"
-                                                        class="btn btn-success btn-sm me-2"
+                                                    <a href="javascript:void(0);" class="btn btn-success btn-sm me-2 mb-2"
                                                         onclick="confirmActivate(event, {{ $user->id }})">
                                                         Aktifkan
                                                     </a>
@@ -92,7 +93,11 @@
                         </div>
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-end">
-                                {{-- Previous link (jump to first page) --}}
+                                <li class="page-item">
+                                    <span class="page-link">
+                                        {{ $users->firstItem() . ' - ' . $users->firstItem() + $index . ' daripada ' . $users->total() . ' Rekod' }}
+                                    </span>
+                                </li>
                                 @if ($users->onFirstPage())
                                     <li class="page-item disabled">
                                         <span class="page-link">&laquo;</span>
@@ -102,8 +107,6 @@
                                         <a class="page-link" href="{{ $users->url(1) }}" rel="prev">&laquo;</a>
                                     </li>
                                 @endif
-
-                                {{-- Page number links (only three around current) --}}
                                 @php
                                     $current = $users->currentPage();
                                     $last = $users->lastPage();
@@ -115,8 +118,6 @@
                                         <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                     </li>
                                 @endforeach
-
-                                {{-- Next link (jump to last page) --}}
                                 @if ($users->hasMorePages())
                                     <li class="page-item">
                                         <a class="page-link" href="{{ $users->url($users->lastPage()) }}"

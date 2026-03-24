@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.custom.main')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid px-4 py-4">
         <div class="row justify-content-center">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="col-md-12">
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 <div class="card bg-white">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -31,13 +31,15 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary input-group-text">Cari</button>
                                         @if (request()->routeIs('vehicles.index') && request()->query())
-                                            <a href="{{ route('vehicles.index') }}" class="btn btn-secondary input-group-text d-flex align-items-center">Set Semula</a>
+                                            <a href="{{ route('vehicles.index') }}"
+                                                class="btn btn-secondary input-group-text d-flex align-items-center">Set
+                                                Semula</a>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="table-responsive">
+                        <div class="table-responsive rounded">
                             <table class="table table-light table-bordered">
                                 <thead>
                                     <tr class="table-dark">
@@ -63,11 +65,11 @@
                                             <td>{{ $vehicle->license_plate }}</td>
                                             <td class="text-end">
                                                 <a href="{{ route('vehicles.show', $vehicle->id) }}"
-                                                    class="btn btn-sm btn-secondary me-2">Lihat</a>
+                                                    class="btn btn-sm btn-secondary me-2 mb-2">Lihat</a>
                                                 @if (auth()->id() == $vehicle->created_by)
                                                     <a href="{{ route('vehicles.edit', $vehicle->id) }}"
-                                                        class="btn btn-sm btn-primary me-2">Kemaskini</a>
-                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2"
+                                                        class="btn btn-sm btn-primary me-2 mb-2">Kemaskini</a>
+                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2 mb-2"
                                                         onclick="confirmDelete(event, {{ $vehicle->id }})">
                                                         Hapus
                                                     </a>
@@ -90,7 +92,11 @@
                         </div>
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-end">
-                                {{-- Previous link (jump to first page) --}}
+                                <li class="page-item">
+                                    <span class="page-link">
+                                        {{ $vehicles->firstItem() . ' - ' . $vehicles->firstItem() + $index . ' daripada ' . $vehicles->total() . ' Rekod' }}
+                                    </span>
+                                </li>
                                 @if ($vehicles->onFirstPage())
                                     <li class="page-item disabled">
                                         <span class="page-link">&laquo;</span>
@@ -100,8 +106,6 @@
                                         <a class="page-link" href="{{ $vehicles->url(1) }}" rel="prev">&laquo;</a>
                                     </li>
                                 @endif
-
-                                {{-- Page number links (only three around current) --}}
                                 @php
                                     $current = $vehicles->currentPage();
                                     $last = $vehicles->lastPage();
@@ -113,8 +117,6 @@
                                         <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                     </li>
                                 @endforeach
-
-                                {{-- Next link (jump to last page) --}}
                                 @if ($vehicles->hasMorePages())
                                     <li class="page-item">
                                         <a class="page-link" href="{{ $vehicles->url($vehicles->lastPage()) }}"

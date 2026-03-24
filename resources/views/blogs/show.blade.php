@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.custom.main')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid px-4 py-4">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card bg-white shadow-sm border-0">
                     <div class="card">
                         <div class="card-header">

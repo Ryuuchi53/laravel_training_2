@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('Layouts.custom.main')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid px-4 py-4">
         <div class="row justify-content-center">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="col-md-12">
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 <div class="card bg-white">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -47,8 +47,8 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="table-responsive">
-                            <table class="table table-light table-bordered">
+                        <div class="table-responsive rounded">
+                            <table class="table table-light table-bordered rounded">
                                 <thead>
                                     <tr class="table-dark">
                                         <th width="5%">{{ __('#') }}</th>
@@ -67,7 +67,7 @@
                                                     <em>
                                                         {{ __('Dicipta Oleh : ') . $blog->user->name }} <br>
                                                         @if ($blog->created_at == $blog->updated_at)
-                                                            {{ __('Pada : ') . $blog->created_at->format('d/m/Y') }}
+                                                            {{ __('Dicipta Pada : ') . $blog->created_at->format('d/m/Y') }}
                                                         @else
                                                             {{ __('Dikemaskini Pada : ') . $blog->updated_at->format('d/m/Y') }}
                                                         @endif
@@ -77,11 +77,11 @@
                                             <td class="text-wrap text-break">{{ $blog->content }}</td>
                                             <td class="text-end">
                                                 <a href="{{ route('blogs.show', $blog->id) }}"
-                                                    class="btn btn-sm btn-secondary me-2">Lihat</a>
+                                                    class="btn btn-sm btn-secondary me-2 mb-2">Lihat</a>
                                                 @if (auth()->id() == $blog->created_by)
                                                     <a href="{{ route('blogs.edit', $blog->id) }}"
-                                                        class="btn btn-sm btn-primary me-2">Kemaskini</a>
-                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2"
+                                                        class="btn btn-sm btn-primary me-2 mb-2">Kemaskini</a>
+                                                    <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2 mb-2"
                                                         onclick="confirmDelete(event, {{ $blog->id }})">
                                                         Hapus
                                                     </a>
@@ -104,7 +104,11 @@
                         </div>
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-end">
-                                {{-- Previous link (jump to first page) --}}
+                                <li class="page-item">
+                                    <span class="page-link">
+                                        {{ $blogs->firstItem() . ' - ' . $blogs->firstItem() + $index . ' daripada ' . $blogs->total() . ' Rekod' }}
+                                    </span>
+                                </li>
                                 @if ($blogs->onFirstPage())
                                     <li class="page-item disabled">
                                         <span class="page-link">&laquo;</span>
@@ -114,8 +118,6 @@
                                         <a class="page-link" href="{{ $blogs->url(1) }}" rel="prev">&laquo;</a>
                                     </li>
                                 @endif
-
-                                {{-- Page number links (only three around current) --}}
                                 @php
                                     $current = $blogs->currentPage();
                                     $last = $blogs->lastPage();
@@ -127,8 +129,6 @@
                                         <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                                     </li>
                                 @endforeach
-
-                                {{-- Next link (jump to last page) --}}
                                 @if ($blogs->hasMorePages())
                                     <li class="page-item">
                                         <a class="page-link" href="{{ $blogs->url($blogs->lastPage()) }}"

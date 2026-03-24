@@ -26,7 +26,8 @@ class BlogController extends Controller
                 });
             })
             ->orderBy('updated_at', 'desc')
-            ->paginate(5);
+            ->paginate(5)
+            ->withQueryString();
 
         return view('blogs.index', compact('blogs'));
     }

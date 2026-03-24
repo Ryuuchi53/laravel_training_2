@@ -24,7 +24,8 @@ class UserController extends Controller
             });
         })
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate(5)
+            ->withQueryString();
 
         return view('users.index', compact('users'));
     }
