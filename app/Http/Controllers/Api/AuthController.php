@@ -25,7 +25,7 @@ class AuthController extends Controller
         $tokenResult = $user->createToken('auth_token');
         $token = $tokenResult->plainTextToken;
 
-        $tokenResult->accessToken->expires_at = now()->addHours(1);
+        // $tokenResult->accessToken->expires_at = now()->addHours(1);
         $tokenResult->accessToken->save();
 
         return response()->json([
