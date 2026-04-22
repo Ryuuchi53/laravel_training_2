@@ -11,19 +11,20 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     public function index() {
-        $blogs = Blog::with('user')->paginate(10);
+        $blogs = Blog::with('user')->get();
         return response()->json([
             'status' => 'true',
-            'message' => 'Berjaya dapatkan semua blog.',
+            'message' => 'Index Success.',
             'data' => $blogs
         ]);
     }
 
     public function store(StoreBlogRequest $request) {
-        Blog::create($request->all());
+        $blogs = Blog::create($request->all());
         return response()->json([
             'status' => 'true',
-            'message' => 'Berjaya simpan blog.'
+            'message' => 'Successfully created.',
+            'data' => $blogs
         ]);
     }
 
@@ -31,7 +32,7 @@ class BlogController extends Controller
         $blog = Blog::with('user')->findOrFail($blog_api);
         return response()->json([
             'status' => 'true',
-            'message' => 'Berjaya dapatkan blog.',
+            'message' => 'Successfully retrieved.',
             'data' => $blog
         ]);
     }
@@ -41,7 +42,7 @@ class BlogController extends Controller
         $blog->update($request->all());
         return response()->json([
             'status' => 'true',
-            'message' => 'Berjaya kemaskini blog.',
+            'message' => 'Successfully updated.',
             'data' => $blog
         ]);
     }
@@ -51,7 +52,7 @@ class BlogController extends Controller
         $blog->delete();
         return response()->json([
             'status' => 'true',
-            'message' => 'Berjaya hapus blog.',
+            'message' => 'Successfully deleted.',
             'data' => $blog
         ]);
     }

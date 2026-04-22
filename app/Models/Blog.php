@@ -12,7 +12,12 @@ class Blog extends Model
         'title',
         'content',
         'created_by',
+        'isDone',
         'attachment'
+    ];
+
+    protected $casts = [
+        'isDone' => 'boolean',
     ];
 
     public function user()
