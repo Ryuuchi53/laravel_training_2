@@ -23,7 +23,7 @@ class BlogController extends Controller
         $blogs = Blog::create($request->all());
         return response()->json([
             'status' => 'true',
-            'message' => 'Successfully created.',
+            'message' => 'Created Successfully.',
             'data' => $blogs
         ]);
     }
@@ -32,7 +32,7 @@ class BlogController extends Controller
         $blog = Blog::with('user')->findOrFail($blog_api);
         return response()->json([
             'status' => 'true',
-            'message' => 'Successfully retrieved.',
+            'message' => 'Retrieved Successfully.',
             'data' => $blog
         ]);
     }
@@ -42,7 +42,7 @@ class BlogController extends Controller
         $blog->update($request->all());
         return response()->json([
             'status' => 'true',
-            'message' => 'Successfully updated.',
+            'message' => 'Updated Successfully.',
             'data' => $blog
         ]);
     }
@@ -52,7 +52,7 @@ class BlogController extends Controller
         $blog->delete();
         return response()->json([
             'status' => 'true',
-            'message' => 'Successfully deleted.',
+            'message' => 'Deleted Successfully.',
             'data' => $blog
         ]);
     }
