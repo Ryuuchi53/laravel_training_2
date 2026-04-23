@@ -37,11 +37,13 @@ class StoreBlogRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
+        $firstMessage = $validator->errors()->first();
+
         if ($this->is('api/blogs-api*')) {
             throw new HttpResponseException(
                 response()->json([
                     'status' => false,
-                    'message' => 'Sila semak semula',
+                    'message' => $firstMessage,
                     'errors' => $validator->errors()
                 ], 422)
             );
@@ -51,20 +53,20 @@ class StoreBlogRequest extends FormRequest
             redirect()->route('blogs.create')
                 ->withErrors($validator)
                 ->withInput()
-                ->with('error', 'Sila semak semula')
+                ->with('error', 'Check your input.')
         );
     }
 
     public function messages()
     {
         return [
-            'title.required' => 'Tajuk diperlukan',
-            'title.max' => 'Tajuk tidak boleh melebihi :max aksara',
-            'content.required' => 'Keterangan diperlukan',
+            'title.required' => 'Title is required',
+            'title.max' => 'Title cannot exceed :max characters',
+            'content.required' => 'Description is required',
 
-            'created_by.required' => 'User tidak dijumpai (token invalid).',
-            'created_by.integer' => 'Id Pengguna mestilah nombor.',
-            'created_by.exists' => 'User tidak wujud dalam sistem.',
+            'created_by.required' => 'User not found (invalid token).',
+            'created_by.integer' => 'User ID must be a number.',
+            'created_by.exists' => 'User does not exist in the system.',
         ];
     }
 }
