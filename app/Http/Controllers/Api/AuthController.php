@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -25,7 +26,7 @@ class AuthController extends Controller
         $tokenResult = $user->createToken('auth_token');
         $token = $tokenResult->plainTextToken;
 
-        // $tokenResult->accessToken->expires_at = now()->addHours(1);
+        $tokenResult->accessToken->expires_at = now()->addHours(1);
         $tokenResult->accessToken->save();
 
         return response()->json([
@@ -34,7 +35,8 @@ class AuthController extends Controller
             'email' => $user->email,
             'message' => 'Login successful.',
             'access_token' => $token,
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
+            'expires_at' => $tokenResult->accessToken->expires_at->toDateTimeString()
         ]);
     }
 }
